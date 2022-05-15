@@ -1,0 +1,14 @@
+.container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  position: relative;
+
+  h4 {
+    margin: 0;
+  }
+
+  > p {
+    margin-bottom: 0;
+  }
+}

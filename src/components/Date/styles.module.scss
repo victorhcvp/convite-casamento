@@ -1,0 +1,22 @@
+.date {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 20px auto;
+  max-width: 190px;
+
+  > div {
+    display: flex;
+    align-items: center;
+  }
+
+  .dateIcon {
+    margin-right: 10px;
+  }
+
+  p {
+    margin: 0;
+    padding-bottom: 5px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,42 @@
+.container {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    width: calc(50% - 5px);
+    background-color: #442051;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    color: white;
+    position: relative;
+
+    .icon {
+      margin-right: 10px;
+      margin-top: 6px;
+    }
+
+    span {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    .star {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
+}
