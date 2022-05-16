@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 type ButtonProps = {
   href: string;
   text: string;
-  icon: string;
+  icon?: string;
   w: number;
   h: number;
   bgColor?: string;
@@ -18,9 +18,11 @@ export function Button(props:ButtonProps) {
     <a className={`${styles.button} ${styles[props.style || '']}`} href={props.href} style={{
       backgroundColor: props.bgColor,
     }} target={props.target || "_self"}>
+      {props.icon && (
       <div>
         <Image src={props.icon} width={props.w} height={props.h} alt="Icon" />
       </div>
+      )}
       {props.text}
     </a>
   );

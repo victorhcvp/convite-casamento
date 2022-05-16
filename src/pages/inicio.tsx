@@ -85,6 +85,13 @@ const Home: NextPage = () => {
         <div className={styles.space}></div>
         <Contatos />
         <div className={styles.space}></div>
+        <Button 
+          href="/logout"
+          text="Sair"
+          w={0}
+          h={0}
+          bgColor="#777"
+        />
       </div>
     </div>
   )

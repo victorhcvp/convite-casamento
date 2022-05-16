@@ -47,7 +47,7 @@ const Login: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Isadora & Victor</h1>
-      <input type="text" placeholder="Digite seu celular" ref={inputRef} />
+      <input type="tel" placeholder="Digite seu celular" ref={inputRef} />
       <button type="submit" onClick={handleLogin}>{submitText}</button>
     </div>
   )

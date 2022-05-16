@@ -82,9 +82,11 @@ export function AuthProvider({children}: AuthProviderProps) {
 
   const logout = useCallback(() => {
     localStorage.removeItem('@phone');
+    localStorage.removeItem('@user');
     setAuth({
         phone: ''
     });
+    setUser({} as User);
   }, []);
 
   return (
