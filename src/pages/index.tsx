@@ -1,14 +1,43 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import { Button } from '../components/Button'
-import { Contatos } from '../components/Contatos'
-import { Date } from '../components/Date'
-import { Header } from '../components/Header'
-import { Welcome } from '../components/Welcome'
-import styles from '../styles/Home.module.scss'
+import { useRouter } from 'next/router'
+import { useRef, useState } from 'react'
+import { useAuth } from '../hooks/auth'
+import styles from '../styles/Login.module.scss'
 
-const Home: NextPage = () => {
+const Login: NextPage = () => {
+  const inputRef = useRef<HTMLInputElement>({} as HTMLInputElement);
+  const { login } = useAuth();
+  const router = useRouter();
+  let loadingInterval: NodeJS.Timer | undefined = undefined;
+  const [submitText, setSubmitText] = useState('Entrar');
+
+  function loadingButtonStart() {
+    clearInterval(loadingInterval);
+    let txt = '';
+    loadingInterval = setInterval(() => {
+      txt = txt + '.';
+      setSubmitText(txt);
+      if(txt == '...') txt = ''
+    }, 200);
+  }
+
+  async function handleLogin() {
+    const phone = inputRef.current.value;
+
+    loadingButtonStart();
+
+    const logged = await login(phone);
+
+    if(logged) {
+      clearInterval(loadingInterval);
+      router.push('/inicio');
+    }
+
+    clearInterval(loadingInterval);
+    setSubmitText('Entrar');
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,62 +46,11 @@ const Home: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      <div className={styles.padding10}>
-        <Date />
-        <Welcome />
-        <Button
-          href="https://www.google.com"
-          text="Como Chegar"
-          icon="/icons/map.svg"
-          w={24}
-          h={24}
-        />
-        <Button
-          href="https://www.google.com"
-          text="Visualizar Convites"
-          icon="/icons/invite.svg"
-          w={22}
-          h={22}
-        />
-        <Button
-          href="https://www.google.com"
-          text="Lista de Presentes"
-          icon="/icons/present.svg"
-          w={20}
-          h={22}
-        />
-        <Button
-          href="https://www.google.com"
-          text="Confirmar Presença"
-          icon="/icons/check.svg"
-          w={24}
-          h={24}
-          bgColor="#BAAA71"
-        />
-        <div className={styles.space}></div>
-        <Button
-          href="https://www.google.com"
-          text="Instruções Madrinhas"
-          icon="/icons/madrinha.svg"
-          w={24}
-          h={24}
-          bgColor="#D8A1CF"
-        />
-        <Button
-          href="https://www.google.com"
-          text="Instruções Padrinhos"
-          icon="/icons/padrinho.svg"
-          w={24}
-          h={24}
-          bgColor="#7E82AE"
-        />
-        <div className={styles.space}></div>
-        <Contatos />
-        <div className={styles.space}></div>
-      </div>
+      <h1>Isadora & Victor</h1>
+      <input type="text" placeholder="Digite seu celular" ref={inputRef} />
+      <button type="submit" onClick={handleLogin}>{submitText}</button>
     </div>
   )
 }
 
-export default Home
+export default Login

@@ -9,13 +9,15 @@ type ButtonProps = {
   w: number;
   h: number;
   bgColor?: string;
+  style?: "small" | "normal";
+  target?: "_blank" | "_self";
 }
 
 export function Button(props:ButtonProps) {
   return (
-    <a className={styles.button} href={props.href} style={{
+    <a className={`${styles.button} ${styles[props.style || '']}`} href={props.href} style={{
       backgroundColor: props.bgColor,
-    }}>
+    }} target={props.target || "_self"}>
       <div>
         <Image src={props.icon} width={props.w} height={props.h} alt="Icon" />
       </div>
