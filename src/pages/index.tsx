@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
+import { ErrorMessage } from '../components/ErrorMessage'
 import { useAuth } from '../hooks/auth'
 import styles from '../styles/Login.module.scss'
 
@@ -11,6 +12,7 @@ const Login: NextPage = () => {
   const router = useRouter();
   let loadingInterval: NodeJS.Timer | undefined = undefined;
   const [submitText, setSubmitText] = useState('Entrar');
+  const [error, setError] = useState('');
 
   function loadingButtonStart() {
     clearInterval(loadingInterval);
@@ -22,8 +24,17 @@ const Login: NextPage = () => {
     }, 200);
   }
 
+  function onKeyUp() {
+    let val = inputRef.current.value;
+    if(/[^0-9]+/.test(val)) {
+      val = val.substring(0, val.length - 1);
+      inputRef.current.value = val;
+    }
+  }
+
   async function handleLogin() {
     const phone = inputRef.current.value;
+    setError('');
 
     loadingButtonStart();
 
@@ -32,6 +43,9 @@ const Login: NextPage = () => {
     if(logged) {
       clearInterval(loadingInterval);
       router.push('/inicio');
+    }
+    else {
+      setError('Número de celular não encontrado.');
     }
 
     clearInterval(loadingInterval);
@@ -47,7 +61,16 @@ const Login: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Isadora & Victor</h1>
-      <input type="tel" placeholder="Digite seu celular" ref={inputRef} />
+      <input 
+        type="tel" 
+        placeholder="Digite seu celular (apenas números)" 
+        ref={inputRef} 
+        onKeyUp={onKeyUp}
+        maxLength={11}
+      />
+      {error && (
+        <ErrorMessage message={error} />
+      )}
       <button type="submit" onClick={handleLogin}>{submitText}</button>
     </div>
   )

@@ -8,3 +8,7 @@ export type User = {
     relation: string;
     confirmed: boolean;
 }
+
+export type Family = {
+    data: User[];
+}

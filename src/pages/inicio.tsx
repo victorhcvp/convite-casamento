@@ -12,7 +12,9 @@ import styles from '../styles/Home.module.scss'
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { auth, user } = useAuth();
+  const { auth, user, family } = useAuth();
+
+  console.log(family);
 
   useEffect(() => {
     if(!auth.phone) {
@@ -40,7 +42,7 @@ const Home: NextPage = () => {
           h={24}
         />
         <Button
-          href="#"
+          href="/convites"
           text="Visualizar Convites"
           icon="/icons/invite.svg"
           w={22}

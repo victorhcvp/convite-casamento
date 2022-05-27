@@ -2,6 +2,10 @@
   max-width: 414px;
   margin: auto;
 
+  > div {
+    margin: 0 10px;
+  }
+
   iframe {
     border: 0;
     width: 100%;

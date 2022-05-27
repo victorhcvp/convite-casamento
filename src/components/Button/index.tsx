@@ -1,29 +1,37 @@
 import Image from 'next/image';
-import { ReactNode } from 'react';
+import { InputHTMLAttributes } from 'react';
 import styles from './styles.module.scss';
 
-type ButtonProps = {
+
+
+interface ButtonProps extends InputHTMLAttributes<HTMLAnchorElement> {
   href: string;
   text: string;
   icon?: string;
-  w: number;
-  h: number;
+  w?: number;
+  h?: number;
   bgColor?: string;
-  style?: "small" | "normal";
+  cStyle?: "small" | "normal";
   target?: "_blank" | "_self";
 }
 
-export function Button(props:ButtonProps) {
+export function Button({href, bgColor, cStyle = "normal", target = "_self", icon, w, h, text, ...rest}:ButtonProps) {
   return (
-    <a className={`${styles.button} ${styles[props.style || '']}`} href={props.href} style={{
-      backgroundColor: props.bgColor,
-    }} target={props.target || "_self"}>
-      {props.icon && (
+    <a 
+      className={`${styles.button} ${styles[cStyle]}`} 
+      href={href} 
+      style={{
+        backgroundColor: bgColor,
+      }} 
+      target={target || "_self"}
+      {...rest}
+    >
+      {icon && (
       <div>
-        <Image src={props.icon} width={props.w} height={props.h} alt="Icon" />
+        <Image src={icon} width={w} height={h} alt="Icon" />
       </div>
       )}
-      {props.text}
+      {text}
     </a>
   );
 }

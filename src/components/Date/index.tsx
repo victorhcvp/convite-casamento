@@ -8,7 +8,7 @@ export function Date() {
         <div className={styles.dateIcon}>
           <Image src="/icons/calendar.svg" width="26" height="26" alt="Date" />
         </div>
-        <p><strong>22 de abril de 2023</strong></p>
+        <p><strong>99 de janeiro de 2500</strong></p>
       </div>
       <div>
         <div className={styles.dateIcon}>

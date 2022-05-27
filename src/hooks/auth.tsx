@@ -2,12 +2,14 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { User } from '../entities/User'
+import { Family } from '../entities/User'
 
 type AuthData = {
   auth: PhoneData;
   login: (phone: string) => Promise<boolean>;
   logout: () => void;
   user: User;
+  family: Family;
 }
 
 type AuthProviderProps = {
@@ -27,6 +29,7 @@ const AuthContext = createContext<AuthData>({} as AuthData)
 export function AuthProvider({children}: AuthProviderProps) {
   const [auth, setAuth] = useState<PhoneData>({} as PhoneData);
   const [user, setUser] = useState<User>({} as User);
+  const [family, setFamily] = useState<Family>({} as Family);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,6 +47,12 @@ export function AuthProvider({children}: AuthProviderProps) {
 
       if(userStored) {
         setUser(JSON.parse(userStored))
+      }
+
+      const familyStored = localStorage.getItem('@family');
+
+      if(familyStored) {
+        setFamily(JSON.parse(familyStored));
       }
     }
   }, [router]);
@@ -65,12 +74,25 @@ export function AuthProvider({children}: AuthProviderProps) {
 
         const userData:UserData = res.data;
 
+        const relation = userData.data.relation;
+
+        const relationRes = await axios({
+          method: 'post',
+          url: '/api/invite/listFamily',
+          data: {
+            relation,
+            password: 'jorge_1234_vaila_cleison',
+          }
+        });
+
         localStorage.setItem('@user', JSON.stringify(userData.data));
+        localStorage.setItem('@family', JSON.stringify(relationRes.data));
         localStorage.setItem('@phone', phone);
         setAuth({
             phone
         });
-        setUser({...userData.data})
+        setUser({...userData.data});
+        setFamily({...relationRes.data});
         return true;
       }
     } catch(error) {
@@ -90,7 +112,7 @@ export function AuthProvider({children}: AuthProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{auth, login, logout, user}}>
+    <AuthContext.Provider value={{auth, login, logout, user, family}}>
       {children}
     </AuthContext.Provider>
   )
