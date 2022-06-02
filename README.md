@@ -16,6 +16,7 @@ O convite será um site digital com acesso personalizado para cada convidado
 ### Presença
 - Criar página de confirmação de presença, com cada membro da família
 - Criar layout da página de confirmação
+- Criar notificação para os noivos de cada confirmação realizada
 
 ### Convites
 - ✔ Só deixar visualizar convite se tiver confirmado

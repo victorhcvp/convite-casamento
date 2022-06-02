@@ -56,7 +56,7 @@ const Home: NextPage = () => {
           h={22}
         />
         <Button
-          href="#"
+          href="/confirmar-presenca"
           text="Confirmar Presença"
           icon="/icons/check.svg"
           w={24}
