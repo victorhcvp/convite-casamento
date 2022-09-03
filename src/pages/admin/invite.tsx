@@ -87,7 +87,7 @@ const NewFamily = (props: Families) => {
     }
 
     const req = {
-      id: props.member.id || "",
+      id: props.member ? props.member.id : "",
       name,
       phone: phoneFiltered,
       email,

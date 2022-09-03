@@ -57,7 +57,9 @@ const Painel = (props: Families) => {
             <p>{statistics.confirmed}</p>
             <span>
               Confirmados (
-              {(statistics.confirmed / statistics.totalInvited) * 100}
+              {((statistics.confirmed / statistics.totalInvited) * 100).toFixed(
+                1
+              )}
               %)
             </span>
           </div>
@@ -65,27 +67,41 @@ const Painel = (props: Families) => {
             <p>{statistics.unconfirmed}</p>
             <span>
               Pendentes (
-              {(statistics.unconfirmed / statistics.totalInvited) * 100}%)
+              {(
+                (statistics.unconfirmed / statistics.totalInvited) *
+                100
+              ).toFixed(1)}
+              %)
             </span>
           </div>
           <div>
             <p>{statistics.godmothers}</p>
             <span>
               Madrinhas (
-              {(statistics.godmothers / statistics.totalInvited) * 100}%)
+              {(
+                (statistics.godmothers / statistics.totalInvited) *
+                100
+              ).toFixed(1)}
+              %)
             </span>
           </div>
           <div>
             <p>{statistics.godfathers}</p>
             <span>
               Padrinhos (
-              {(statistics.godfathers / statistics.totalInvited) * 100}%)
+              {(
+                (statistics.godfathers / statistics.totalInvited) *
+                100
+              ).toFixed(1)}
+              %)
             </span>
           </div>
           <div>
             <p>{statistics.normal}</p>
             <span>
-              Normais ({(statistics.normal / statistics.totalInvited) * 100}%)
+              Normais (
+              {((statistics.normal / statistics.totalInvited) * 100).toFixed(1)}
+              %)
             </span>
           </div>
         </div>
