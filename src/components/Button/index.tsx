@@ -27,12 +27,12 @@ export function Button({
 }: ButtonProps) {
   return href ? (
     <Link href={href} target={target || "_self"}>
-      <button
+      <a
         className={`${styles.button} ${styles[cStyle]}`}
         style={{
           backgroundColor: bgColor,
         }}
-        {...rest}
+        target={target || "_self"}
       >
         {icon && (
           <div>
@@ -40,7 +40,7 @@ export function Button({
           </div>
         )}
         {text}
-      </button>
+      </a>
     </Link>
   ) : (
     <button

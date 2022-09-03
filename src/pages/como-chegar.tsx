@@ -2,12 +2,14 @@ import { NextPage } from "next";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
 import styles from "../styles/ComoChegar.module.scss";
+import { BackButton } from "../components/BackButton";
 
 const ComoChegar: NextPage = () => {
   return (
     <div className={styles.container}>
       <Header />
       <div>
+        <BackButton text="Voltar" />
         <h2>Como Chegar</h2>
         <p>
           <strong>Endereço:</strong>

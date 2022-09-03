@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { BackButton } from "../../components/BackButton";
 import styles from "../../styles/Admin.module.scss";
 
 type Families = {
@@ -45,6 +46,7 @@ const Painel = (props: Families) => {
   return (
     <>
       <div className={styles.adminPanel}>
+        <BackButton text="Voltar para o site" href="/inicio" />
         <h2>Estatísticas</h2>
         <div className={styles.adminStatistics}>
           <div>

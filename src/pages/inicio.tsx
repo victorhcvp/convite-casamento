@@ -51,7 +51,8 @@ const Home: NextPage = () => {
               h={22}
             />
             <Button
-              href="#"
+              href="https://sites.icasei.com.br/victoreisa/pages/26818776"
+              target="_blank"
               text="Lista de Presentes"
               icon="/icons/present.svg"
               w={20}
@@ -84,6 +85,16 @@ const Home: NextPage = () => {
                 w={24}
                 h={24}
                 bgColor="#7E82AE"
+              />
+            )}
+            {user.isAdmin && (
+              <Button
+                href="/admin"
+                text="Administração"
+                icon="/icons/admin.svg"
+                w={24}
+                h={24}
+                bgColor="#551010"
               />
             )}
             <div className={styles.space}></div>

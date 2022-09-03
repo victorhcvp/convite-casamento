@@ -69,6 +69,9 @@
           filter: brightness(1.1);
         }
       }
+      button + button {
+        margin-left: 10px;
+      }
       button.yes {
         background-color: #7cd184;
       }
