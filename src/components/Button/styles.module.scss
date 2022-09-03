@@ -6,7 +6,7 @@
   color: white;
   display: flex;
   align-items: center;
-  background-color: #A27EAE;
+  background-color: #a27eae;
   border: none;
   width: 100%;
   cursor: pointer;
@@ -24,7 +24,8 @@
     filter: brightness(1.1);
   }
 
-  &:active, &:visited {
+  &:active,
+  &:visited {
     color: white;
   }
 }

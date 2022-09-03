@@ -1,14 +1,10 @@
-import { ReactNode } from 'react';
-import styles from './styles.module.scss';
+import { ReactNode } from "react";
+import styles from "./styles.module.scss";
 
 type PageTitleData = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
-export function PageTitle({children}: PageTitleData) {
-  return (
-    <h1 className={styles.container}>
-      {children}
-    </h1>
-  );
+export function PageTitle({ children }: PageTitleData) {
+  return <h1 className={styles.container}>{children}</h1>;
 }

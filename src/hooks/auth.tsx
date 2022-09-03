@@ -1,124 +1,137 @@
-import axios from "axios";
-import { useRouter } from "next/router";
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { User } from '../entities/User'
-import { Family } from '../entities/User'
+import { useSession } from "next-auth/react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { User } from "../entities/User";
+import { Family } from "../entities/User";
 
 type AuthData = {
-  auth: PhoneData;
-  login: (phone: string) => Promise<boolean>;
+  loadFamily: (email: string) => Promise<boolean>;
   logout: () => void;
   user: User;
   family: Family;
-}
+  updateFamily: (family: Family) => Family;
+};
 
 type AuthProviderProps = {
   children: ReactNode;
-}
+};
 
-type PhoneData = {
-  phone: string;
-}
+let loadingFamily = false;
 
-type UserData = {
-  data: User;
-}
+const AuthContext = createContext<AuthData>({} as AuthData);
 
-const AuthContext = createContext<AuthData>({} as AuthData)
-
-export function AuthProvider({children}: AuthProviderProps) {
-  const [auth, setAuth] = useState<PhoneData>({} as PhoneData);
+export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>({} as User);
   const [family, setFamily] = useState<Family>({} as Family);
-  const router = useRouter();
+  const { data, status } = useSession();
+
+  const updateFamily = useCallback((family: Family) => {
+    setFamily(family);
+    localStorage.setItem("@family", JSON.stringify(family));
+    return family;
+  }, []);
 
   useEffect(() => {
-    if(typeof window !== undefined) {
-      const phoneStored = localStorage.getItem('@phone');
-
-      if(phoneStored) {
-        setAuth({phone: phoneStored})
-        if(router.pathname === '/') {
-          router.push('/inicio')
-        }
-      }
-
-      const userStored = localStorage.getItem('@user');
-
-      if(userStored) {
-        setUser(JSON.parse(userStored))
-      }
-
-      const familyStored = localStorage.getItem('@family');
-
-      if(familyStored) {
-        setFamily(JSON.parse(familyStored));
+    if (status === "authenticated") {
+      if (!family.data && data && data.user && data.user.email) {
+        if (!window.location.pathname.includes("/admin"))
+          loadFamily(data.user.email);
       }
     }
-  }, [router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
 
-  async function login(phone:string) {
-    try {
-      const res = await axios({
-        method: 'post',
-        url: '/api/login',
-        data: {
-          phone
+  async function loadFamily(email: string) {
+    if (loadingFamily) return false;
+
+    loadingFamily = true;
+    console.log("Loading family members");
+
+    if (typeof window !== undefined) {
+      const cacheExpired = localStorage.getItem("@cache-expires");
+      if (Number(cacheExpired) > new Date().getTime()) {
+        const userStored = localStorage.getItem("@user");
+
+        if (userStored) {
+          console.log("Loaded user from cache");
+          setUser(JSON.parse(userStored));
         }
+
+        const familyStored = localStorage.getItem("@family");
+
+        if (familyStored) {
+          console.log("Loaded family from cache");
+          setFamily({ data: JSON.parse(familyStored) });
+        }
+
+        if (userStored && familyStored) {
+          console.log("Family members loaded");
+          return true;
+        }
+      } else {
+        console.log("Cache expired - loading from DB");
+      }
+    }
+
+    try {
+      const res = await fetch(`/api/invite/listFamily`, {
+        method: "POST",
+        body: JSON.stringify({
+          relation: "carvalho",
+          password: "jorge_1234_vaila_cleison",
+        }),
       });
 
-      if(res.status !== 200) {
-        console.log('não logado');
-      }
-      else {
+      const familyMembers = (await await res.json()) as Family;
 
-        const userData:UserData = res.data;
+      localStorage.setItem("@family", JSON.stringify(familyMembers.data));
+      setFamily(familyMembers);
 
-        const relation = userData.data.relation;
+      const userAccessing = familyMembers.data.find(
+        (member) => member.email === email
+      );
+      setUser(userAccessing ? userAccessing : ({} as User));
+      localStorage.setItem("@user", JSON.stringify(userAccessing));
 
-        const relationRes = await axios({
-          method: 'post',
-          url: '/api/invite/listFamily',
-          data: {
-            relation,
-            password: 'jorge_1234_vaila_cleison',
-          }
-        });
+      const expiresAt = new Date().getTime() + 1000 * 60 * 5;
+      localStorage.setItem("@cache-expires", expiresAt.toString());
+      console.log("Cache will expire at", new Date(expiresAt));
 
-        localStorage.setItem('@user', JSON.stringify(userData.data));
-        localStorage.setItem('@family', JSON.stringify(relationRes.data));
-        localStorage.setItem('@phone', phone);
-        setAuth({
-            phone
-        });
-        setUser({...userData.data});
-        setFamily({...relationRes.data});
-        return true;
-      }
-    } catch(error) {
+      console.log("Family members loaded");
 
+      loadingFamily = false;
+      return true;
+    } catch (error) {
+      loadingFamily = false;
     }
-    
+
     return false;
   }
 
   const logout = useCallback(() => {
-    localStorage.removeItem('@phone');
-    localStorage.removeItem('@user');
-    setAuth({
-        phone: ''
-    });
+    localStorage.removeItem("@family");
+    localStorage.removeItem("@user");
+    localStorage.removeItem("@cache-expires");
     setUser({} as User);
+    setFamily({} as Family);
   }, []);
 
   return (
-    <AuthContext.Provider value={{auth, login, logout, user, family}}>
+    <AuthContext.Provider
+      value={{ loadFamily, logout, user, family, updateFamily }}
+    >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   return context;
 }

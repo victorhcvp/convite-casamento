@@ -12,8 +12,8 @@
     margin: 0 0 20px 0;
     padding: 0;
     text-align: center;
-    color: #A27EAE;
-    font-family: 'Josefin Sans', sans-serif;
+    color: #a27eae;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 48px;
     font-weight: normal;
     z-index: 1;
@@ -23,31 +23,21 @@
     }
   }
 
-  input {
-    padding: 20px;
-    border: 0;
-    border-radius: 10px;
-    font-size: 16px;
-    width: 100%;
-
-    &::placeholder {
-      color: #999;
-    }
+  p {
+    margin-top: 0;
+    text-align: center;
+    max-width: 300px;
   }
 
-  span {
-    margin-top: 10px;
-    color: #535353;
-    font-size: 14px;
-  }
-
-  button[type="submit"] {
+  button {
     margin-top: 10px;
     border: 0;
-    background-color: #A27EAE;
+    background-color: #a27eae;
     color: white;
+    font-weight: bold;
     border-radius: 10px;
-    padding:  10px 0px;
+    padding: 15px 20px;
     min-width: 150px;
+    cursor: pointer;
   }
 }

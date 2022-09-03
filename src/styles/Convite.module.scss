@@ -1,0 +1,62 @@
+.container {
+  max-width: 414px;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+.padding10 {
+  padding: 0 10px;
+}
+
+.ticket {
+  height: 205px;
+  max-width: 355px;
+  margin: auto;
+  background-image: url("/icons/ticket.png");
+  background-size: 113% auto;
+  background-repeat: no-repeat;
+  background-position: -33px -176px;
+
+  padding: 15px 25px;
+  font-family: "Roboto Mono";
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  h2 + div {
+    width: 60%;
+    height: 1px;
+    background-color: white;
+    margin-top: 15px;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+
+  strong {
+    text-transform: capitalize;
+  }
+
+  .padrinho {
+    background-color: #442051;
+    display: table;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 10px;
+    margin-top: 18px;
+  }
+}
+
+.inviteInstructions {
+  font-size: 16px;
+  text-align: center;
+}
