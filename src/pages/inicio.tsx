@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
             <Contatos />
             <div className={styles.space}></div>
             <Button
-              href="/api/auth/signout"
+              onClick={() => signOut()}
               text="Sair"
               w={0}
               h={0}

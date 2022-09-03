@@ -1,10 +1,26 @@
 import { NextPageContext } from "next";
 import { AppProviders } from "next-auth/providers";
-import { getProviders, signIn } from "next-auth/react";
+import { getProviders, signIn, useSession } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import styles from "../../styles/Login.module.scss";
 
-export default function SignIn({ providers }: { providers: AppProviders }) {
+interface IProps {
+  providers: AppProviders;
+  callbackUrl: string;
+}
+
+export default function SignIn({ providers, callbackUrl }: IProps) {
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push(callbackUrl);
+    }
+  }, [callbackUrl, router, status]);
+
   return (
     <>
       <div className={styles.container}>
@@ -38,7 +54,13 @@ export default function SignIn({ providers }: { providers: AppProviders }) {
 
 export async function getServerSideProps(context: NextPageContext) {
   const providers = await getProviders();
+
+  const callbackUrl = context.query.callbackUrl || "/";
+
   return {
-    props: { providers },
+    props: {
+      providers,
+      callbackUrl,
+    },
   };
 }

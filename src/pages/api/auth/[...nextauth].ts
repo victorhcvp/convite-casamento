@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 
 const _url =
   process.env.NODE_ENV !== "production"
@@ -22,6 +23,10 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_AUTH_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET || "",
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_AUTH_CLIENT_ID || "",
+      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET || "",
     }),
   ],
   callbacks: {

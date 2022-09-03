@@ -10,7 +10,7 @@ const Admin: NextPage = () => {
   const { status } = useSession();
 
   if (status === "unauthenticated") {
-    router.push("/api/auth/signin");
+    router.push("/auth/login?callbackUrl=/admin");
   } else if (status === "authenticated") {
     router.push("/admin/painel");
   }
