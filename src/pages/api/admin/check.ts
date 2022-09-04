@@ -9,11 +9,13 @@ type ListData = {
 type FaunaRes = {
   data: {
     isAdmin: boolean;
+    relation: string;
   };
 };
 
 type Data = {
   isAdmin?: boolean;
+  relation?: string;
   error?: string;
 };
 
@@ -34,7 +36,12 @@ export default async function handler(
 
     console.log(faunaRes);
 
-    return res.status(200).json({ isAdmin: faunaRes.data.isAdmin });
+    return res
+      .status(200)
+      .json({
+        isAdmin: faunaRes.data.isAdmin,
+        relation: faunaRes.data.relation,
+      });
   } catch (error) {
     return res.status(500).json({ error: JSON.stringify(error) });
   }

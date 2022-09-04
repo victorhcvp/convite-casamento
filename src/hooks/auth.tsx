@@ -29,7 +29,7 @@ const AuthContext = createContext<AuthData>({} as AuthData);
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>({} as User);
   const [family, setFamily] = useState<Family>({} as Family);
-  const { data, status } = useSession();
+  const { data, data: session, status } = useSession();
 
   const updateFamily = useCallback((family: Family) => {
     setFamily(family);
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const res = await fetch(`/api/invite/listFamily`, {
         method: "POST",
         body: JSON.stringify({
-          relation: user.relation,
+          relation: session?.relation,
           password: "jorge_1234_vaila_cleison",
         }),
       });

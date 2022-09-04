@@ -13,6 +13,7 @@ interface ILogin {
 
 interface IAdminCheck {
   isAdmin: boolean;
+  relation: string;
 }
 
 export default NextAuth({
@@ -50,6 +51,7 @@ export default NextAuth({
       });
       const data = (await res.json()) as IAdminCheck;
       session.admin = data.isAdmin;
+      session.relation = data.relation;
       return session;
     },
   },
