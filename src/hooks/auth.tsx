@@ -83,7 +83,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const res = await fetch(`/api/invite/listFamily`, {
         method: "POST",
         body: JSON.stringify({
-          relation: "carvalho",
+          relation: user.relation,
           password: "jorge_1234_vaila_cleison",
         }),
       });
