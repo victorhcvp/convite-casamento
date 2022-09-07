@@ -39,7 +39,11 @@ export function Convite() {
             <section className={styles.ticket}>
               <div>
                 <h2
-                  className={member.name.length >= 13 ? styles.smallName : ""}
+                  className={
+                    member.name && member.name.length >= 13
+                      ? styles.smallName
+                      : ""
+                  }
                 >
                   {member.name}
                 </h2>
