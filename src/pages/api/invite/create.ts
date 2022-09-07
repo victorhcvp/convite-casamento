@@ -20,6 +20,7 @@ type CreateData = {
   email: string;
   isGodfather: boolean;
   isGodmother: boolean;
+  isHonor: boolean;
   relation: string;
   password: string;
   confirmed: boolean;
@@ -37,6 +38,7 @@ export default async function handler(
     email,
     isGodfather,
     isGodmother,
+    isHonor,
     relation,
     password,
     confirmed,
@@ -57,6 +59,7 @@ export default async function handler(
     !name ||
     isGodfather === undefined ||
     isGodmother === undefined ||
+    isHonor === undefined ||
     isAdmin === undefined ||
     !relation
   ) {
@@ -70,6 +73,7 @@ export default async function handler(
     email,
     isGodfather,
     isGodmother,
+    isHonor,
     relation,
     confirmed: confirmed || false,
     isAdmin,

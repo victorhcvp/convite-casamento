@@ -67,9 +67,9 @@ const Home: NextPage = () => {
               bgColor="#BAAA71"
             />
             <div className={styles.space}></div>
-            {user.isGodmother && (
+            {(user.isGodmother || user.isGodfather) && (
               <Button
-                href="#"
+                href="/padrinhos-madrinhas"
                 text="Instruções Madrinhas"
                 icon="/icons/madrinha.svg"
                 w={24}
@@ -77,9 +77,19 @@ const Home: NextPage = () => {
                 bgColor="#D8A1CF"
               />
             )}
-            {user.isGodfather && (
+            {(user.isHonor || user.isHonor) && (
               <Button
-                href="#"
+                href="/damas"
+                text="Instruções Dama"
+                icon="/icons/crown.svg"
+                w={24}
+                h={24}
+                bgColor="#F26C84"
+              />
+            )}
+            {(user.isGodfather || user.isGodmother) && (
+              <Button
+                href="/padrinhos-madrinhas"
                 text="Instruções Padrinhos"
                 icon="/icons/padrinho.svg"
                 w={24}

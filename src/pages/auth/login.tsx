@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { NextPageContext } from "next";
 import { AppProviders } from "next-auth/providers";
 import { getProviders, signIn, useSession } from "next-auth/react";
@@ -34,17 +36,17 @@ export default function SignIn({ providers, callbackUrl }: IProps) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <h1>Isadora & Victor</h1>
-        <p>
-          Faça login com o provedor que preferir, usando o mesmo e-mail do
-          convite.
-        </p>
+        <p>Escolha como fazer login</p>
         {Object.values(providers).map((provider) => {
           return (
-            <div key={provider.name}>
-              <button onClick={() => signIn(provider.id)}>
-                Login com {provider.name}
-              </button>
-            </div>
+            <button key={provider.name} onClick={() => signIn(provider.id)}>
+              {provider.name === "Discord" && <img src="/icons/discord.svg" />}
+              {provider.name === "Facebook" && (
+                <img src="/icons/facebook.svg" />
+              )}
+              {provider.name === "Google" && <img src="/icons/google.svg" />}
+              <span>Login com {provider.name}</span>
+            </button>
           );
         })}
       </div>

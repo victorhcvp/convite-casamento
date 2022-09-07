@@ -5,6 +5,7 @@ export type User = {
   email: string;
   isGodfather: boolean;
   isGodmother: boolean;
+  isHonor: boolean;
   relation: string;
   confirmed: boolean;
   isAdmin: boolean;

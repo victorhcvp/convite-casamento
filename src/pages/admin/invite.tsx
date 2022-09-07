@@ -31,6 +31,7 @@ const NewFamily = (props: Families) => {
   const typeNormalInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const typeGodmotherInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const typeGodfatherInput = useRef<HTMLInputElement>({} as HTMLInputElement);
+  const typeHonorInput = useRef<HTMLInputElement>({} as HTMLInputElement);
 
   const [error, setError] = useState("");
   const [saveButtonText, setSaveButtonText] = useState("Salvar");
@@ -62,6 +63,7 @@ const NewFamily = (props: Families) => {
     if (typeNormalInput.current.checked) type = "normal";
     else if (typeGodmotherInput.current.checked) type = "godmother";
     else if (typeGodfatherInput.current.checked) type = "godfather";
+    else if (typeHonorInput.current.checked) type = "honor";
 
     console.log(family, name, phone, email, type);
 
@@ -93,6 +95,7 @@ const NewFamily = (props: Families) => {
       email,
       isGodfather: type === "godfather",
       isGodmother: type === "godmother",
+      isHonor: type === "honor",
       relation: family,
       password: "jorge_1234_vaila_cleison",
       confirmed: false,
@@ -250,6 +253,16 @@ const NewFamily = (props: Families) => {
             defaultChecked={props.member && props.member.isGodfather}
           />
           <label htmlFor="godfather">Padrinho</label>
+
+          <input
+            type="radio"
+            name="type"
+            value="honor"
+            id="honor"
+            ref={typeHonorInput}
+            defaultChecked={props.member && props.member.isHonor}
+          />
+          <label htmlFor="honor">Dama de Honra</label>
         </div>
       </form>
       <button onClick={handleSaveInvite} disabled={saveButtonText !== "Salvar"}>

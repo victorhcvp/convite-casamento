@@ -35,7 +35,7 @@ export function Convites() {
           }, 5000)
         );
       } else {
-        push(`/convite/${family.data[memberId].phone}`);
+        push(`/convite/${family.data[memberId].id}`);
       }
     }
 

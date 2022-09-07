@@ -10,12 +10,14 @@
   border: none;
   width: 100%;
   cursor: pointer;
+  text-align: left;
 
   > div {
     display: flex;
     align-items: center;
     margin-right: 5px;
     width: 24px;
+    min-width: 24px;
   }
 
   transition: all 200ms;

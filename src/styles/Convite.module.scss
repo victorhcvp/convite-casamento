@@ -2,6 +2,10 @@
   max-width: 414px;
   margin: auto;
   padding-bottom: 10px;
+
+  p {
+    text-align: center;
+  }
 }
 
 .padding10 {
@@ -9,15 +13,40 @@
 }
 
 .ticket {
-  height: 205px;
-  max-width: 355px;
+  width: 300px;
   margin: auto;
-  background-image: url("/icons/ticket.png");
-  background-size: 113% auto;
-  background-repeat: no-repeat;
-  background-position: -33px -176px;
+  background-color: #a27eae;
+  // border-top-left-radius: 25px;
+  // border-bottom-left-radius: 25px;
+  position: relative;
+  min-height: 180px;
 
-  padding: 15px 25px;
+  &::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    background-image: url("/icons/ticket3.png");
+    left: -28px;
+    background-size: 100%;
+    background-position: top;
+    transform: rotate(180deg);
+  }
+
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    background-image: url("/icons/ticket3.png");
+    right: -28px;
+    background-size: 100%;
+    background-position: top;
+  }
+
+  padding: 20px;
   font-family: "Roboto Mono";
   color: white;
 
@@ -28,6 +57,7 @@
   h2 {
     margin: 0;
     font-size: 24px;
+    text-align: left;
   }
 
   h2 + div {
@@ -40,19 +70,44 @@
   p {
     font-size: 16px;
     margin-bottom: 0;
+    text-align: left;
   }
 
   strong {
     text-transform: capitalize;
   }
 
-  .padrinho {
-    background-color: #442051;
+  .badges {
+    display: flex;
+  }
+
+  .padrinho,
+  .madrinha,
+  .honra,
+  .confirmed {
     display: table;
     padding: 5px;
     border-radius: 5px;
     font-size: 10px;
     margin-top: 18px;
+    margin-right: 5px;
+  }
+
+  .padrinho {
+    background-color: #442051;
+  }
+  .madrinha {
+    background-color: #d8a1cf;
+  }
+  .honra {
+    background-color: #f26c84;
+  }
+  .confirmed {
+    background-color: #20513e;
+  }
+
+  .smallName {
+    font-size: 18px;
   }
 }
 

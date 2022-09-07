@@ -151,6 +151,7 @@
 .radioGroup {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   input[type="radio"] {
     display: none;
