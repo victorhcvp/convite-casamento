@@ -108,7 +108,7 @@ const Painel = (props: Families) => {
         <h2>Convites</h2>
         <p>Clique para alterar os convidados da família:</p>
         {families &&
-          families.map((f) => (
+          families.sort().map((f) => (
             <Link href={`/admin/family/${f}`} key={f}>
               <a>{f}</a>
             </Link>
