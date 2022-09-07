@@ -80,7 +80,7 @@ const Home: NextPage = () => {
             {(user.isHonor || user.isHonor) && (
               <Button
                 href="/damas"
-                text="Instruções Dama"
+                text="Instruções Damas"
                 icon="/icons/crown.svg"
                 w={24}
                 h={24}

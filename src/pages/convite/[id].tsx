@@ -81,7 +81,7 @@ export function Convite() {
         )}
         {family.data &&
           family.data
-            .filter((m) => m.id !== member.id)
+            .filter((m) => m.id !== member.id && m.confirmed)
             .map((m) => {
               return (
                 <>
