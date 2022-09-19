@@ -18,6 +18,7 @@ type CreateData = {
   name: string;
   phone: string;
   email: string;
+  oldEmail: string;
   isGodfather: boolean;
   isGodmother: boolean;
   isHonor: boolean;
@@ -36,6 +37,7 @@ export default async function handler(
     name,
     phone,
     email,
+    oldEmail,
     isGodfather,
     isGodmother,
     isHonor,
@@ -83,7 +85,7 @@ export default async function handler(
     fauna.query(
       q.Let(
         {
-          match: q.Match(q.Index("email"), email),
+          match: q.Match(q.Index("email"), oldEmail ? oldEmail : email),
           data: { data },
         },
         q.If(

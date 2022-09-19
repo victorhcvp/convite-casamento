@@ -5,6 +5,7 @@ import router from "next/router";
 import { useCallback, useRef, useState } from "react";
 import { BackButton } from "../../components/BackButton";
 import { ErrorMessage } from "../../components/ErrorMessage";
+import { SuccessMessage } from "../../components/SuccessMessage";
 import { User } from "../../entities/User";
 import styles from "../../styles/Admin.module.scss";
 
@@ -28,12 +29,14 @@ const NewFamily = (props: Families) => {
   const nameInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const phoneInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const emailInput = useRef<HTMLInputElement>({} as HTMLInputElement);
+  const oldEmailInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const typeNormalInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const typeGodmotherInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const typeGodfatherInput = useRef<HTMLInputElement>({} as HTMLInputElement);
   const typeHonorInput = useRef<HTMLInputElement>({} as HTMLInputElement);
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [saveButtonText, setSaveButtonText] = useState("Salvar");
 
   console.log("Member", props.member);
@@ -59,6 +62,7 @@ const NewFamily = (props: Families) => {
     const name = nameInput.current.value;
     const phone = phoneInput.current.value;
     const email = emailInput.current.value;
+    const oldEmail = oldEmailInput.current.value;
     let type;
     if (typeNormalInput.current.checked) type = "normal";
     else if (typeGodmotherInput.current.checked) type = "godmother";
@@ -100,11 +104,14 @@ const NewFamily = (props: Families) => {
       password: "jorge_1234_vaila_cleison",
       confirmed: false,
       isAdmin: false,
+      oldEmail,
     };
 
     setSaveButtonText("Carregando...");
 
     try {
+      console.log(req);
+
       const res = await fetch(`/api/invite/create`, {
         method: "POST",
         body: JSON.stringify(req),
@@ -115,9 +122,13 @@ const NewFamily = (props: Families) => {
       setSaveButtonText("Salvar");
       if (data.ok) {
         console.log("Invite created");
+        setSuccess("Convite criado/atualizado com sucesso");
         if (familyRef.current.value === "#new") {
           setFamilies([...families, family]);
         }
+        setTimeout(() => {
+          setSuccess("");
+        }, 2000);
       } else {
         console.log("Error creating invite", data.error);
         setError(`Erro ao criar convite: ${data.error}`);
@@ -217,6 +228,14 @@ const NewFamily = (props: Families) => {
           ref={emailInput}
           defaultValue={props.member ? props.member.email : ""}
         />
+        <input
+          type="hidden"
+          id="old-email"
+          name="old-email"
+          placeholder="old-email"
+          ref={oldEmailInput}
+          defaultValue={props.member ? props.member.email : ""}
+        />
 
         <label htmlFor="type">Tipo de convite:</label>
         <div className={styles.radioGroup}>
@@ -269,6 +288,7 @@ const NewFamily = (props: Families) => {
         {saveButtonText}
       </button>
       {error && <ErrorMessage message={error} />}
+      {success && <SuccessMessage message={success} />}
     </div>
   );
 };

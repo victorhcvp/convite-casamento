@@ -106,7 +106,8 @@
     margin-top: 15px;
   }
 
-  form input {
+  form input,
+  input {
     display: block;
     width: 100%;
     border: 0;
@@ -114,6 +115,10 @@
     padding: 8px;
     font-size: 14px;
     font-family: "Open Sans", sans-serif;
+  }
+
+  input[name="search"] {
+    margin-bottom: 15px;
   }
 
   select {

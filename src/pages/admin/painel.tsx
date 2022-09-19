@@ -2,7 +2,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BackButton } from "../../components/BackButton";
 import styles from "../../styles/Admin.module.scss";
 
@@ -27,9 +27,21 @@ const Painel = (props: Families) => {
   const router = useRouter();
   const [families, setFamilies] = useState(props.families);
   const [statistics, setStatistics] = useState(props.statistics);
+  const [search, setSearch] = useState("");
   const { data, status } = useSession();
+  const searchRef = useRef<HTMLInputElement>({} as HTMLInputElement);
 
   console.log(props.statistics);
+
+  const handleSearch = useCallback(() => {
+    const searchValue = searchRef.current.value;
+    if (searchValue.length > 2) {
+      setSearch(searchValue);
+    }
+    if (searchValue.length === 0) {
+      setSearch("");
+    }
+  }, []);
 
   if (status === "loading") {
     return (
@@ -107,12 +119,33 @@ const Painel = (props: Families) => {
         </div>
         <h2>Convites</h2>
         <p>Clique para alterar os convidados da família:</p>
+        <p>
+          <strong>Pesquisar por nome da família</strong>
+        </p>
+        <input
+          type="text"
+          id="search"
+          name="search"
+          ref={searchRef}
+          onChange={handleSearch}
+        />
         {families &&
+          !search &&
           families.sort().map((f) => (
             <Link href={`/admin/family/${f}`} key={f}>
               <a>{f}</a>
             </Link>
           ))}
+        {families &&
+          search &&
+          families
+            .filter((family) => family.includes(search))
+            .sort()
+            .map((f) => (
+              <Link href={`/admin/family/${f}`} key={f}>
+                <a>{f}</a>
+              </Link>
+            ))}
         <div className={styles.separator}></div>
         <Link href="/admin/invite">
           <a className={styles.newFamilyButton}>Criar novo convite</a>
