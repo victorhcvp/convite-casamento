@@ -11,7 +11,10 @@ export function BackButton({ text, href = "/inicio" }: BackButtonProps) {
   const router = useRouter();
 
   return (
-    <div className={styles.container} onClick={() => router.push(href)}>
+    <div
+      className={styles.container}
+      onClick={() => (href === "voltar" ? router.back() : router.push(href))}
+    >
       <Image
         src="/icons/chevron-left.svg"
         width="16"

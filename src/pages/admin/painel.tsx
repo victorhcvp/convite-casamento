@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BackButton } from "../../components/BackButton";
+import { User } from "../../entities/User";
 import styles from "../../styles/Admin.module.scss";
 
 type Families = {
@@ -129,6 +130,9 @@ const Painel = (props: Families) => {
           ref={searchRef}
           onChange={handleSearch}
         />
+        <Link href={`/admin/especiais`}>
+          <a>Convites Especiais</a>
+        </Link>
         {families &&
           !search &&
           families.sort().map((f) => (
@@ -161,7 +165,6 @@ export async function getServerSideProps() {
   const { data } = await axios.post(`${_url}/api/admin/listFamilies`, {
     password: "jorge_1234_vaila_cleison",
   });
-
   const statisticsData = await axios.get(`${_url}/api/admin/statistics`);
 
   return {
