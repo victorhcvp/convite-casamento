@@ -8,11 +8,6 @@ type Data = {
   error?: string;
 };
 
-type FaunaGet = {
-  ref: any;
-  data: CreateData;
-};
-
 type CreateData = {
   id?: string;
   name: string;
@@ -70,13 +65,13 @@ export default async function handler(
 
   const data = {
     id: id || uuidv4(),
-    name,
-    phone,
-    email,
+    name: name.trim(),
+    phone: phone.trim(),
+    email: email.trim(),
     isGodfather,
     isGodmother,
     isHonor,
-    relation,
+    relation: relation.trim(),
     confirmed: confirmed || false,
     isAdmin,
   };
