@@ -17,7 +17,7 @@ export function Date() {
           <Image src="/icons/clock.svg" width="26" height="26" alt="Date" />
         </div>
         <p>
-          <strong>16:00</strong>
+          <strong>15:30</strong>
         </p>
       </div>
     </section>
