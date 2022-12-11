@@ -1,10 +1,9 @@
 .container {
-  display: flex;
   align-items: center;
   justify-content: center;
 
   a {
-    width: calc(50% - 5px);
+    width: calc(100% - 5px);
     background-color: #442051;
     border-radius: 8px;
     padding: 10px;

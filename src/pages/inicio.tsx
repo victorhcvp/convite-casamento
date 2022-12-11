@@ -59,6 +59,13 @@ const Home: NextPage = () => {
               h={22}
             />
             <Button
+              href="/dress-code"
+              target="_self"
+              text="💃 Dress Code"
+              w={20}
+              h={22}
+            />
+            <Button
               href="/confirmar-presenca"
               text="Confirmar Presença"
               icon="/icons/check.svg"
